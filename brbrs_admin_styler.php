@@ -2,8 +2,8 @@
 /**
  * Plugin Name: Simple Admin Styler
  * Plugin URI:  https://github.com/andreibarburas/simple-admin-styler
- * Description: Customize the WordPress login page and dashboard; background image, font size, admin bar, and dashboard widget visibility.
- * Version:     1.0.0
+ * Description: Customize the WordPress login page and dashboard — background image, font size, admin bar, and dashboard widget visibility.
+ * Version:     1.1.0
  * Text Domain: simple-admin-styler
  * Author:      andrei BARBURAS
  * Author URI:  https://barburas.com
@@ -33,8 +33,8 @@ if ( file_exists( $brbrs_as_puc ) ) {
     $brbrs_as_updater->getVcsApi()->enableReleaseAssets();
 }
 
-define( 'BRBRS_AS_VERSION', '1.0.0' );
-define( 'BRBRS_AS_OPTION',  'brbrs_admin_styler_settings' );
+define( 'BRBRS_AS_VERSION', '1.1.0' );
+define( 'BRBRS_AS_OPTION',  'simple_admin_styler_settings' );
 
 // ─────────────────────────────────────────────
 // 1. LOGIN PAGE — enqueue dynamic CSS
@@ -44,6 +44,7 @@ function brbrs_as_login_styles() {
     $opts      = brbrs_as_get_options();
     $bg_url    = esc_url( $opts['login_bg_url'] );
     $font_size = absint( $opts['login_font_size'] );
+    $logo_url  = esc_url( $opts['login_logo_url'] );
 
     $css = "
 .login {
@@ -80,6 +81,19 @@ function brbrs_as_login_styles() {
 ";
     }
 
+    if ( $logo_url ) {
+        $css .= "
+#login h1 a {
+    background-image: url('{$logo_url}') !important;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    width: 100% !important;
+    height: 80px !important;
+}
+";
+    }
+
     $css .= "
 #nav, #backtoblog {
     display: none;
@@ -112,6 +126,15 @@ function brbrs_as_login_styles() {
     wp_add_inline_style( 'brbrs-as-login', $css );
 }
 add_action( 'login_enqueue_scripts', 'brbrs_as_login_styles' );
+
+function brbrs_as_login_logo_url() {
+    $opts = brbrs_as_get_options();
+    if ( ! empty( $opts['login_logo_url'] ) ) {
+        return home_url();
+    }
+    return 'https://wordpress.org/';
+}
+add_filter( 'login_headerurl', 'brbrs_as_login_logo_url' );
 
 
 // ─────────────────────────────────────────────
@@ -220,6 +243,22 @@ function brbrs_as_render_settings_page() {
                         </tr>
                         <tr>
                             <th scope="row">
+                                <label for="brbrs_as_login_logo_url">Logo Image URL</label>
+                            </th>
+                            <td>
+                                <input
+                                    type="url"
+                                    id="brbrs_as_login_logo_url"
+                                    name="<?php echo esc_attr( BRBRS_AS_OPTION ); ?>[login_logo_url]"
+                                    value="<?php echo esc_attr( $opts['login_logo_url'] ); ?>"
+                                    class="regular-text"
+                                    placeholder="https://example.com/logo.png"
+                                />
+                                <p class="description">Replaces the WordPress logo above the login form. Leave blank to keep the default.</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
                                 <label for="brbrs_as_login_font_size">Font Size (px)</label>
                             </th>
                             <td>
@@ -322,9 +361,10 @@ add_action( 'admin_enqueue_scripts', 'brbrs_as_admin_styles' );
 
 function brbrs_as_get_options() {
     $defaults = array(
-        'login_bg_url'    => '',
-        'login_font_size' => '',
-        'hide_admin_bar'  => 0,
+        'login_bg_url'     => '',
+        'login_logo_url'   => '',
+        'login_font_size'  => '',
+        'hide_admin_bar'   => 0,
         'disabled_widgets' => array(),
     );
 
@@ -337,6 +377,7 @@ function brbrs_as_sanitize_options( $input ) {
     $clean = array();
 
     $clean['login_bg_url']    = isset( $input['login_bg_url'] ) ? esc_url_raw( trim( $input['login_bg_url'] ) ) : '';
+    $clean['login_logo_url']  = isset( $input['login_logo_url'] ) ? esc_url_raw( trim( $input['login_logo_url'] ) ) : '';
     $clean['login_font_size'] = isset( $input['login_font_size'] ) ? absint( $input['login_font_size'] ) : 0;
     $clean['hide_admin_bar']  = ! empty( $input['hide_admin_bar'] ) ? 1 : 0;
 

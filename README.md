@@ -11,7 +11,7 @@ A WordPress plugin to customize the login page and dashboard — background imag
 
 ## Installation
 
-1. Download the latest `brbrs-admin-styler.zip` from the [Releases](../../releases) page.
+1. Download the latest `simple-admin-styler.zip` from the [Releases](https://github.com/andreibarburas/simple-admin-styler/releases) page.
 2. In WordPress, go to **Plugins → Add New → Upload Plugin**.
 3. Upload the zip and activate.
 4. Go to **Settings → Admin Styler** to configure.
@@ -47,6 +47,13 @@ Toggle visibility for each dashboard widget:
 - Welcome Panel
 
 ## Version History
+
+### Updated to v1.1.0. Here's what changed:
+
+- New "Logo Image URL" field in the Login Page section — paste any image URL and it replaces the WordPress logo above the login form
+- CSS targets #login h1 a (the standard WP logo element) and swaps the background image, with contain sizing so any aspect ratio works cleanly
+- login_headerurl filter — when a custom logo is set, clicking it goes to your site's homepage instead of wordpress.org
+- If the field is left blank, everything falls back to WordPress defaults — no change in behaviour
 
 ### 1.0.0
 - Initial release
