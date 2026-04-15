@@ -1,0 +1,130 @@
+/* Simple Admin Styler — Settings Page */
+
+.brbrs-as-wrap h1 {
+    font-size: 1.6em;
+    margin-bottom: 2px;
+}
+
+.brbrs-as-subtitle {
+    color: #666;
+    margin-top: 0;
+    margin-bottom: 24px;
+}
+
+.brbrs-as-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.brbrs-as-section {
+    background: #fff;
+    border: 1px solid #dcdcde;
+    border-radius: 4px;
+    padding: 20px 24px 16px;
+    margin-bottom: 20px;
+}
+
+.brbrs-as-section h2 {
+    font-size: 1em;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #1d2327;
+    margin: 0 0 16px 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #f0f0f1;
+}
+
+.brbrs-as-table th {
+    width: 220px;
+    font-weight: 500;
+    padding: 10px 0;
+    vertical-align: middle;
+}
+
+.brbrs-as-table td {
+    padding: 10px 0;
+    vertical-align: middle;
+}
+
+.brbrs-as-table .description {
+    margin-top: 4px;
+    color: #787c82;
+    font-size: 12px;
+}
+
+/* Toggle switch */
+.brbrs-as-toggle {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+.brbrs-as-toggle input[type="checkbox"] {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    position: absolute;
+}
+
+.brbrs-as-toggle-slider {
+    display: inline-block;
+    width: 40px;
+    height: 22px;
+    background-color: #dcdcde;
+    border-radius: 11px;
+    transition: background-color 0.2s ease;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.brbrs-as-toggle-slider::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 16px;
+    height: 16px;
+    background: #fff;
+    border-radius: 50%;
+    transition: transform 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.brbrs-as-toggle input[type="checkbox"]:checked + .brbrs-as-toggle-slider {
+    background-color: #d63638;
+}
+
+.brbrs-as-toggle input[type="checkbox"]:checked + .brbrs-as-toggle-slider::after {
+    transform: translateX(18px);
+}
+
+/* Widget status badge */
+.brbrs-as-widget-status {
+    margin-left: 10px;
+    vertical-align: middle;
+}
+
+.brbrs-status-on,
+.brbrs-status-off {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 2px 7px;
+    border-radius: 3px;
+}
+
+.brbrs-status-on {
+    background: #edfaef;
+    color: #1a7928;
+}
+
+.brbrs-status-off {
+    background: #fce8e8;
+    color: #d63638;
+}

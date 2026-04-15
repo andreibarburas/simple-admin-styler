@@ -1,0 +1,10 @@
+# Plugin Update Checker is bundled at release time by GitHub Actions
+vendor/
+
+# Build artifacts
+build/
+*.zip
+
+# OS junk
+.DS_Store
+Thumbs.db
